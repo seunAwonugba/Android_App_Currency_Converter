@@ -60,34 +60,38 @@ class MainViewModel @Inject constructor(
                 )
 
                 is ApiCallErrorHandler.Success -> {
-//                    val rates = apiRatesResponse.data!!.rates
-//
-//                    val ratesConversion = getRatesFromCurrency(toCurrency, rates)
-//
-//                    if(ratesConversion == null){
-//                        _conversion.value = CurrencyEvent.Failure("Unexpected Error")
-//                    }else{
-//                        val convertAmountToConvertTo2DP = round(amountToConvert * ratesConversion * 100) / 100
-//                    }
                     val rates = apiRatesResponse.data!!.rates
 
-                    val ratesConversion = getRatesFromCurrency(toCurrency, rates).toString()
+                    val ratesConversion = getRatesFromCurrency(toCurrency, rates)
+//
+                    if(ratesConversion == null){
+                        _conversion.value = CurrencyEvent.Failure("Unexpected Error")
+                    }else{
+                        val convertAmountToConvertTo2DP = round(amountToConvert * ratesConversion * 100) / 100
+                        _conversion.value =
+                            CurrencyEvent.Success(
+                                "$amountToConvert $fromCurrency = $convertAmountToConvertTo2DP $toCurrency"
+                            )
+                    }
+//                    val rates = apiRatesResponse.data!!.rates
+//
+//                    val ratesConversion = getRatesFromCurrency(toCurrency, rates).toString()
+//
+//                    val convert_AmountToConvert_To_2DP = round(
+//                        amountToConvert * ratesConversion.toFloat() * 100
+//                    ) / 100
 
-                    val convert_AmountToConvert_To_2DP = round(
-                        amountToConvert * ratesConversion.toFloat() * 100
-                    ) / 100
-
-                    _conversion.value =
-                        CurrencyEvent.Success(
-                        "$amountToConvert $fromCurrency = $convert_AmountToConvert_To_2DP $toCurrency"
-                    )
+//                    _conversion.value =
+//                        CurrencyEvent.Success(
+//                        "$amountToConvert $fromCurrency = $convert_AmountToConvert_To_2DP $toCurrency"
+//                    )
                 }
             }
 
         }
     }
 
-    private fun getRatesFromCurrency(currency: String, rates: Rates) = when (currency){
+    private fun getRatesFromCurrency(currency: String, rates: Rates)  = when (currency){
         "AED" -> rates.AED
         "AFN" -> rates.AFN
         "ALL" -> rates.ALL

@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface RetrofitServiceInterface {
 
-    @GET(LATEST_END_POINT)
+    @GET( LATEST_END_POINT)
     suspend fun getLatestExchangeRateInInterface(
         @Query("base") base : String,
         @Query("access_key")  access_key : String = ACCESS_KEY
