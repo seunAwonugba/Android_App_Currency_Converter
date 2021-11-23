@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -39,9 +42,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMainBinding.bind(view)
 
-
-
-
         binding.button.setOnClickListener {
             var fromCurrency = binding.fromCurrencyCodeTextViewId.text.toString()
             var toCurrency = binding.toCurrencyCodeTextViewId.text.toString()
@@ -73,6 +73,19 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                     }
                     else -> Unit
                 }
+            }
+        }
+
+        //implement light and dark mode
+        binding.switch1.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+                binding.textView.setTextColor(Color.parseColor("white"))
+                binding.resultTextViewId.setTextColor(Color.parseColor("white"))
+            }
+            else{
+                AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+
             }
         }
 
